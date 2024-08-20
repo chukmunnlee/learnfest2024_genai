@@ -1,17 +1,25 @@
 {
 	"name": "Learning Festival 2024 - Developing GenAI Applications",
-	"image": "python:3.12",
+	"build": {
+		"dockerfile": "./Dockerfile",
+		"context": ".", 
+		"args": {
+			"REMOTE_USER": "${localEnv:USER}",
+			"REMOTE_UID": "${localEnv:REMOTE_UID:1000}",
+			"REMOTE_GID": "${localEnv:REMOTE_GID:1000}"
+		}
+	},
+	"remoteUser": "${localEnv:USER}",
 	"hostRequirements": {
 		"cpus": 2,
 		"memory": "4gb",
 		"storage": "2gb"
 	},
-	"waitFor": "onCreateCommand",
-	"updateContentCommand": "python3 -m pip install -r requirements.txt",
+	"waitFor": "updateContentCommand",
+	"updateContentCommand": "pip install -r requirements.txt",
 	"customizations": {
 		"vscode": {
-			"extensions": [ "ms-python.python", "ms-toolsai.jupyter" ], 
-			"postCreateCommand": "pip3 --disable-pip-version-check --no-cache-dir install -r requirements.txt"
+			"extensions": [ "ms-python.python", "ms-toolsai.jupyter" ]
 		}
 	}
 }
