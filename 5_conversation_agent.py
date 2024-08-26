@@ -8,10 +8,16 @@ from langchain_community.callbacks import get_openai_callback
 
 from langchain.agents import AgentExecutor, create_react_agent
 
-llm = ChatOpenAI(name="gpt4o", temperature=0.1, verbose=True)
+from load_vector_db import create_retriever_tool_from_vector_store
+
+llm = ChatOpenAI(name="gpt4o", temperature=0.1, verbose=True, streaming=False)
+
 tool_names = [ 'ddg-search', 'wikipedia', 'arxiv', 'stackexchange', 'llm-math' ]
 
-tools = load_tools(tool_names=tool_names, llm=llm)
+# Create tools from retrievers
+retriever_tools = create_retriever_tool_from_vector_store()
+# Load tools
+tools = load_tools(llm=llm, tool_names=tool_names, tools=retriever_tools)
 
 prompt_template_text = '''
 Answer the following questions as best you can. You have access to the following tools:
@@ -38,14 +44,15 @@ Previous conversation history: {chat_history}
 
 prompt = PromptTemplate.from_template(prompt_template_text)
 
+# Configure agent's memory
 memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
 
 agent = create_react_agent(llm=llm, tools=tools, prompt=prompt)
 executor = AgentExecutor.from_agent_and_tools(agent=agent, tools=tools, memory=memory,
       verbose=True, handle_parsing_errors=True)
 
-with get_openai_callback() as cb:
-   while True:
+while True:
+   with get_openai_callback() as cb:
       print('============================\n')
       try:
          question = input('Question: ')
