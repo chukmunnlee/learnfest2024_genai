@@ -43,7 +43,7 @@ with get_openai_callback() as cb:
    results = retriever.invoke(input=question, k=3)
 
    for i, r in enumerate(results):
-      print(r.page_content, r.metadata['source'])
+      print(r.page_content, '\nSOURCE:', r.metadata['source'])
       print("\n=======================\n")
 
    print('\n', cb)

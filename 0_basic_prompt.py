@@ -7,10 +7,18 @@ from langchain_community.callbacks import get_openai_callback
 # create a LLM
 llm = ChatOpenAI(name="gpt4o", temperature=.8)
 
+
+# create a prompt
+#prompt = PromptTemplate.from_template("""
+#   Tell me {count} jokes on {topic}. 
+#   If the topic is offensive, crude or tasteless, then refrain from telling the joke.
+#
+#   Rate the jokes between 1 and 10
+#""")
+
 # create a prompt
 prompt = PromptTemplate.from_template("""
    Tell me {count} jokes on {topic}. 
-   If the topic is offensive, crude or tasteless, then say I am a clean comedian.
 
    Rate the jokes between 1 and 10
 """)

@@ -32,6 +32,6 @@ results = vector_store.similarity_search_with_score(
 i = 0
 for doc, score in results:
    i += 1
-   print(f"{i} {doc.page_content}, score={score}")
+   print(f"{i} {doc.page_content}, SCORE={score}")
    print("\n=======================\n")
 
