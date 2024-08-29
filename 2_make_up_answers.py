@@ -8,7 +8,6 @@ from langchain_community.callbacks import get_openai_callback
 # 0 <= temperature <= 2
 llm = ChatOpenAI(name="gpt4o", temperature=1)
 
-
 # create a prompt
 prompt = PromptTemplate.from_template("""
    Answer the following question:
