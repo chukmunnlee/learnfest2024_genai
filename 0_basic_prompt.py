@@ -26,7 +26,16 @@ prompt = PromptTemplate.from_template("""
 count = int(input('\n\nNumber of jokes: '))
 topic = input('\nTopic: ')
 
-prompt_text = prompt.invoke({ 'count': count, 'topic': topic})
+prompt_text = prompt.invoke({ 'count': count, 'topic': topic })
+
+#   Lets think through this step by step.
+#   I will give you $20 if you can explain how you arrived at the answer.
+#prompt = PromptTemplate.from_template("""
+#   I am standing at A. I walked 10 steps north. I then walked 5 steps east.
+#
+#   How far am I from A?
+#""")
+#prompt_text = prompt.invoke({})
 
 with get_openai_callback() as cb:
    # Invoke the LLM
